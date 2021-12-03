@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      h1 {
+        text-align: center;
+      }
+      .wrapper {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        height: 100%;
+      }
+
+      .block {
+        border: 2px solid black;
+        padding: 20px 50px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .block + .block {
+        margin-left: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Генератор Фибоначчи</h1>
+    <div class="wrapper">
+      <div class="block">
+        <p>F(15,7,+)</p>
+        <button id="block-generate-btn-plus">Сгенерировать</button>
+        <div class="block-text" id="block-plus"></div>
+      </div>
+      <div class="block">
+        <p>F(15,7,*)</p>
+        <button id="block-generate-btn-multi">Сгенерировать</button>
+        <div class="block-text" id="block-multi"></div>
+      </div>
+      <div class="block">
+        <p>F(15,7,^)</p>
+        <button id="block-generate-btn-xor">Сгенерировать</button>
+        <div class="block-text" id="block-xor"></div>
+      </div>
+      <div class="block">
+        <p>Стандартный</p>
+        <button id="block-generate-btn-standart">Сгенерировать</button>
+        <div class="block-text" id="block-standart"></div>
+      </div>
+    </div>
+    <div style="padding: 5vh 20vw;">
+      <canvas id="myChart"></canvas>
+    </div>
+
+    <script src="dist/project.js"></script>
+  </body>
+</html>
