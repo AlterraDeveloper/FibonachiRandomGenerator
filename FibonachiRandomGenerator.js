@@ -1,9 +1,9 @@
-export default function generateRandomNumbers(count, type) {
+function generateRandomNumbers(count, type) {
   const numbers = new Array(count);
   const generatorCb = getRandomGenerator(type);
   for (let i = 0; i < count; i++) {
     numbers[i] = generatorCb();
-      }
+  }
   return numbers;
 }
 
@@ -21,16 +21,16 @@ function getRandomGenerator(operator) {
   const r = 17;
   const s = 5;
   const operation = operator;
-  const k = 32;
+  const k = 16;
   let next = r;
   const startWord = [];
 
   switch (operation) {
-    case "+":
-    case "^":
+    case "plus":
+    case "xor":
       for (let i = 1; i < r + 1; i++) startWord.push(getFibonachiNumber(i));
       break;
-    case "*":
+    case "multiply":
       let i = 1;
       while (startWord.length < r) {
         const fibNum = getFibonachiNumber(i++);
@@ -43,13 +43,13 @@ function getRandomGenerator(operator) {
   return function () {
     let randomNumber;
     switch (operation) {
-      case "+":
+      case "plus":
         randomNumber = (startWord[next - r] + startWord[next - s]) % 2 ** k;
         break;
-      case "^":
+      case "xor":
         randomNumber = (startWord[next - r] ^ startWord[next - s]) % 2 ** k;
         break;
-      case "*":
+      case "multiply":
         randomNumber = (startWord[next - r] * startWord[next - s]) % 2 ** k;
         break;
     }
@@ -58,3 +58,5 @@ function getRandomGenerator(operator) {
     return randomNumber;
   };
 }
+
+export { generateRandomNumbers };

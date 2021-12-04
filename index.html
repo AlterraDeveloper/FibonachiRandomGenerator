@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Random</title>
     <style>
-      body {
+      * {
+        box-sizing: border-box;
+      }
+      body{
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
       }
 
       h1 {
@@ -33,33 +35,79 @@
       .block + .block {
         margin-left: 50px;
       }
+
+      .main-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #ccc;
+        border-radius: 3rem;
+        width: 50%;
+        margin: 2rem auto;
+        padding: 1rem;
+      }
+
+      .main-form .form-item {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        padding: 10px 5px;
+      }
+
+      #canvasWrapper{
+        padding: 5vh 20vw;
+        width: 100%;
+        height: 100%;
+      }
+      canvas{
+        width: 100%;
+        height: 100%;
+        background-color: #bbb;
+      }
+      
     </style>
   </head>
   <body>
-    <h1>Генератор Фибоначчи</h1>
-    <div class="wrapper">
-      <div class="block">
-        <p>F(15,7,+)</p>
-        <button id="block-generate-btn-plus">Сгенерировать</button>
-        <div class="block-text" id="block-plus"></div>
+    <div id="MainForm" class="main-form">
+      <h1>Генератор Фибоначчи</h1>
+      <div class="form-item">
+        <legend>Кол-во чисел в последовательности</legend>
+        <input type="number" id="numbersCount" />
+        <p></p>
       </div>
-      <div class="block">
-        <p>F(15,7,*)</p>
-        <button id="block-generate-btn-multi">Сгенерировать</button>
-        <div class="block-text" id="block-multi"></div>
+      <div class="form-item">
+        <legend>Метод генерирования последовательности</legend>
+        <select name="generationMethodType" id="generationMethodType">
+          <option value="plus">F(15,7,+)</option>
+          <option value="multiply">F(15,7,*)</option>
+          <option value="xor">F(15,7,^)</option>
+        </select>
+        <p></p>
       </div>
-      <div class="block">
-        <p>F(15,7,^)</p>
-        <button id="block-generate-btn-xor">Сгенерировать</button>
-        <div class="block-text" id="block-xor"></div>
+      <div class="form-item">
+        <legend>Метод тестирования последовательности</legend>
+        <select name="testMethodType" id="testMethodType">
+          <option value="distributionHystogram">
+            Гистограмма распределения элементов
+          </option>
+          <option value="distributionOnPlane">
+            Распределение на плоскости
+          </option>
+          <option value="seriesCheck">Проверка серий</option>
+          <option value="monotonyCheck">Проверка на монотонность</option>
+          <option value="autocorrelationFunction">
+            Автокорреляционная функция (АКФ)
+          </option>
+        </select>
+        <p></p>
       </div>
-      <div class="block">
-        <p>Стандартный</p>
-        <button id="block-generate-btn-standart">Сгенерировать</button>
-        <div class="block-text" id="block-standart"></div>
+      <div class="form-item">
+        <input type="button" id="submitForm" value="Нарисовать графический тест"></button>
       </div>
     </div>
-    <div style="padding: 5vh 20vw;">
+
+    <div id="canvasWrapper" style="">
       <canvas id="myChart"></canvas>
     </div>
 
