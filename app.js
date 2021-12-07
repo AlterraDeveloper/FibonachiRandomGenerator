@@ -13,7 +13,9 @@ submitFormButton.onclick = () => {
 
   const chartDisplayName = `${
     testMethodType.options[testMethodType.selectedIndex].text
-  } ${generationMethodType.options[generationMethodType.selectedIndex].text}`;
+  } ${
+    generationMethodType.options[generationMethodType.selectedIndex].text
+  } для ${numbersCount.value} элементов`;
 
   const randomNumbers = generateRandomNumbers(
     Number.parseInt(numbersCount.value),
@@ -25,11 +27,13 @@ submitFormButton.onclick = () => {
   canvasWrapper.appendChild(canvas);
 
   const chartData = prepareData(randomNumbers, testMethodType.value);
+
   console.log(chartData);
   switch (testMethodType.value) {
     case "distributionHystogram":
     case "seriesCheck":
     case "monotonyCheck":
+    case "autocorrelationFunction":
       buildHystogram(
         chartData.dataForX,
         chartData.dataForY,
@@ -45,7 +49,7 @@ submitFormButton.onclick = () => {
         chartDisplayName
       );
       break;
-    case "autocorrelationFunction":
+
     default:
       break;
   }

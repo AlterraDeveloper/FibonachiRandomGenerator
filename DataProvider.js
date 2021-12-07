@@ -9,6 +9,7 @@ function prepareData(numbers, typeName) {
     case "monotonyCheck":
       return prepareDataForMonotonyCheck(numbers);
     case "autocorrelationFunction":
+      return prepareDataForAutocorrelationFunction(numbers);
     default:
       return null;
   }
@@ -121,6 +122,44 @@ function prepareDataForMonotonyCheck(numbers) {
   return {
     dataForX: monotonies.map((x, i) => i + 1),
     dataForY: monotonies.map((x) => x.length),
+  };
+}
+
+function prepareDataForAutocorrelationFunction(numbers) {
+  const numbersAfterBinaryNormalization = Array.from(
+    numbers.map((x) => new Number(x).toString(2).padStart(16, "0")).join("")
+  ).map((x) => (Number.parseInt(x) ? 1 : -1));
+
+  const denominatorSum = numbersAfterBinaryNormalization.reduce(
+    (sum, num) => (sum += num ** 2),
+    0
+  );
+  const numbersLength = numbersAfterBinaryNormalization.length;
+  const shiftedNumbersArray = [];
+
+  // получаем массив сдвигов
+  for (let i = 0; i <= numbersLength; i++) {
+    const shiftedNumbers = [];
+    for (let j = 0; j < numbersLength; j++) {
+      shiftedNumbers.push(
+        numbersAfterBinaryNormalization[(i + j) % numbersLength]
+      );
+    }
+    shiftedNumbersArray.push(shiftedNumbers);
+  }
+
+  const numerators = [];
+  for (const shiftedArray of shiftedNumbersArray) {
+    const numeratorSum =
+      shiftedArray.reduce(
+        (sum, num, i) => (sum += num * numbersAfterBinaryNormalization[i]),
+        0
+      ) / denominatorSum;
+    numerators.push(Math.round((numeratorSum + Number.EPSILON) * 100) / 100);
+  }
+  return {
+    dataForX: numerators.map((x, i) => i + 1),
+    dataForY: numerators,
   };
 }
 
