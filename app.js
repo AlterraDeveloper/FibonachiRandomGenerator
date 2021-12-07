@@ -11,8 +11,9 @@ submitFormButton.onclick = () => {
   const generationMethodType = document.getElementById("generationMethodType");
   const testMethodType = document.getElementById("testMethodType");
 
-  const chartDisplayName =
-    testMethodType.options[testMethodType.selectedIndex].text;
+  const chartDisplayName = `${
+    testMethodType.options[testMethodType.selectedIndex].text
+  } ${generationMethodType.options[generationMethodType.selectedIndex].text}`;
 
   const randomNumbers = generateRandomNumbers(
     Number.parseInt(numbersCount.value),
@@ -24,8 +25,11 @@ submitFormButton.onclick = () => {
   canvasWrapper.appendChild(canvas);
 
   const chartData = prepareData(randomNumbers, testMethodType.value);
+  console.log(chartData);
   switch (testMethodType.value) {
     case "distributionHystogram":
+    case "seriesCheck":
+    case "monotonyCheck":
       buildHystogram(
         chartData.dataForX,
         chartData.dataForY,
@@ -40,8 +44,7 @@ submitFormButton.onclick = () => {
         canvas,
         chartDisplayName
       );
-    case "seriesCheck":
-    case "monotonyCheck":
+      break;
     case "autocorrelationFunction":
     default:
       break;
